@@ -13,12 +13,13 @@ import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { Menu, Search } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
+import { type LucideIcon } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 
 const getIconComponent = (iconName: string) => {
     const Icon = LucideIcons[iconName as keyof typeof LucideIcons];
-    return Icon || LucideIcons.HelpCircle;
+    return (Icon || LucideIcons.HelpCircle) as LucideIcon;
 };
 
 const defaultMainNavItems: NavItem[] = [];
@@ -41,7 +42,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
             items.forEach(item => {
                 mainNavItems.push({
                     ...item,
-                    icon: getIconComponent(item.icon as string)
+                    icon: getIconComponent(item.icon as unknown as string)
                 });
             });
         });

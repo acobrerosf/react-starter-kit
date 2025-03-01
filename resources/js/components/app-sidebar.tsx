@@ -5,14 +5,15 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import { type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import * as LucideIcons from 'lucide-react';
+import { type LucideIcon } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const footerNavItems: NavItem[] = [];
 
 // Add a helper function to get the icon component by name
-const getIconComponent = (iconName: string) => {
+const getIconComponent = (iconName: string): LucideIcon => {
     const Icon = LucideIcons[iconName as keyof typeof LucideIcons];
-    return Icon || LucideIcons.HelpCircle;
+    return (Icon || LucideIcons.HelpCircle) as LucideIcon;
 };
 
 export function AppSidebar() {
@@ -36,7 +37,7 @@ export function AppSidebar() {
                 {Object.entries(menu as Record<string, NavItem[]>).map(([category, items]) => (
                     <NavMain key={category} label={category} items={items.map(item => ({
                         ...item,
-                        icon: getIconComponent(item.icon as string)
+                        icon: getIconComponent(item.icon as unknown as string)
                     }))} />
                 ))}
             </SidebarContent>
