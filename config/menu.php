@@ -13,11 +13,22 @@ return [
 
     'admin' => [
         \App\Models\UserAccessLevel::FULL_ADMINISTRATOR => [
-            'Platform' => [
-                [
-                    'title' => 'Dashboard',
-                    'url' => '/dashboard',
-                    'icon' => 'LayoutGrid',
+            'en' => [
+                'Platform' => [
+                    [
+                        'title' => 'Dashboard',
+                        'url' => '/dashboard',
+                        'icon' => 'LayoutGrid',
+                    ],
+                ],
+            ],
+            'es' => [
+                'Aplicación' => [
+                    [
+                        'title' => 'Inicio',
+                        'url' => '/dashboard',
+                        'icon' => 'LayoutGrid',
+                    ],
                 ],
             ],
         ],

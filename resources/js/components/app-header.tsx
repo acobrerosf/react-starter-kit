@@ -33,12 +33,12 @@ interface AppHeaderProps {
 
 export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
     const page = usePage<SharedData>();
-    const { auth, menu } = page.props;
+    const { auth, menu, locale, fallbackLocale } = page.props;
     const getInitials = useInitials();
-    
+
     const mainNavItems: NavItem[] = [];
     if (menu) {
-        Object.entries(menu as Record<string, NavItem[]>).forEach(([_, items]) => {
+        Object.entries((menu[locale] || menu[fallbackLocale]) as Record<string, NavItem[]>).forEach(([_, items]) => {
             items.forEach(item => {
                 mainNavItems.push({
                     ...item,

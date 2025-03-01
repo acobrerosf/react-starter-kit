@@ -17,8 +17,8 @@ const getIconComponent = (iconName: string): LucideIcon => {
 };
 
 export function AppSidebar() {
-    const { menu } = usePage<SharedData>().props;
-    
+    const { menu, locale, fallbackLocale } = usePage<SharedData>().props;
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
@@ -34,7 +34,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                {Object.entries(menu as Record<string, NavItem[]>).map(([category, items]) => (
+                {Object.entries((menu[locale] || menu[fallbackLocale]) as Record<string, NavItem[]>).map(([category, items]) => (
                     <NavMain key={category} label={category} items={items.map(item => ({
                         ...item,
                         icon: getIconComponent(item.icon as unknown as string)
