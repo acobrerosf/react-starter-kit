@@ -25,6 +25,9 @@ export interface SharedData {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
+    menu: Record<string, NavItem[]>;
+    locale: string;
+    fallbackLocale: string;
     [key: string]: unknown;
 }
 
