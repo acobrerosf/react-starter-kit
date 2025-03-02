@@ -38,7 +38,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
 
     const mainNavItems: NavItem[] = [];
     if (menu) {
-        Object.entries((menu[locale] || menu[fallbackLocale]) as Record<string, NavItem[]>).forEach(([_, items]) => {
+        Object.entries(menu).forEach(([_, items]) => {
             items.forEach(item => {
                 mainNavItems.push({
                     ...item,
