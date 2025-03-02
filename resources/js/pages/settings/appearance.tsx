@@ -6,6 +6,7 @@ import { type BreadcrumbItem } from '@/types';
 
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -15,13 +16,15 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Appearance() {
+    const { t } = useLaravelReactI18n();
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Appearance settings" />
+            <Head title={t('pages.settings.appearance.title')} />
 
             <SettingsLayout>
                 <div className="space-y-6">
-                    <HeadingSmall title="Appearance settings" description="Update your account's appearance settings" />
+                    <HeadingSmall title={t('pages.settings.appearance.title')} description={t('pages.settings.appearance.heading_description')} />
                     <AppearanceTabs />
                 </div>
             </SettingsLayout>
