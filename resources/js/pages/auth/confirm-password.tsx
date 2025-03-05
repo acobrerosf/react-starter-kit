@@ -11,7 +11,7 @@ import AuthLayout from '@/layouts/auth-layout';
 import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 export default function ConfirmPassword() {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm<Required<{ password: string }>>({
         password: '',
     });
 
