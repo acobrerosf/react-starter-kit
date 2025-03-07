@@ -1,4 +1,5 @@
 import { LucideIcon } from 'lucide-react';
+import type { Config } from 'ziggy-js';
 
 export interface Auth {
     user: User;
@@ -28,6 +29,7 @@ export interface SharedData {
     menu: Record<string, NavItem[]>;
     locale: string;
     fallbackLocale: string;
+    ziggy: Config & { location: string };
     [key: string]: unknown;
 }
 
