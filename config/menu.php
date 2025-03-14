@@ -16,7 +16,7 @@ return [
             'Platform' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => '/dashboard',
+                    'href' => '/dashboard',
                     'icon' => 'LayoutGrid',
                 ],
             ],
