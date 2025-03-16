@@ -25,7 +25,8 @@ class DatatableRequest extends FormRequest
             'page' => 'sometimes|integer|min:1',
             'perPage' => 'sometimes|integer|min:1|max:100',
             'sort' => 'sometimes|string',
-            'order' => 'sometimes|string|in:asc,desc',
+            'order' => 'sometimes|in:asc,desc',
+            'filter' => 'sometimes|string|nullable',
         ];
     }
 
@@ -34,7 +35,7 @@ class DatatableRequest extends FormRequest
      */
     public function getPage(): int
     {
-        return (int) $this->input('page', 1);
+        return $this->input('page', 1);
     }
 
     /**
@@ -42,7 +43,7 @@ class DatatableRequest extends FormRequest
      */
     public function getPerPage(): int
     {
-        return (int) $this->input('perPage', 10);
+        return $this->input('perPage', 10);
     }
 
     /**
@@ -59,5 +60,13 @@ class DatatableRequest extends FormRequest
     public function getOrder(): string
     {
         return $this->input('order', 'asc');
+    }
+
+    /**
+     * Get the filter from the request.
+     */
+    public function getFilter(): ?string
+    {
+        return $this->input('filter', '');
     }
 }

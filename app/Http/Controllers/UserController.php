@@ -18,7 +18,8 @@ class UserController extends Controller
             $request->getPage(),
             $request->getPerPage(),
             $request->getSort(),
-            $request->getOrder()
+            $request->getOrder(),
+            $request->getFilter()
         );
 
         return Inertia::render('users/index', [
@@ -29,6 +30,7 @@ class UserController extends Controller
             'lastPage' => $users->lastPage(),
             'sort' => $request->getSort(),
             'order' => $request->getOrder(),
+            'filter' => $request->getFilter(),
         ]);
     }
 }
