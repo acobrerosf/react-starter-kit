@@ -20,6 +20,7 @@ interface DataTablePaginationProps {
     perPage: number
     total: number
     lastPage: number
+    dataKey?: string
 }
 
 export function DataTablePagination({
@@ -27,6 +28,7 @@ export function DataTablePagination({
     perPage,
     total,
     lastPage,
+    dataKey = 'data',
 }: DataTablePaginationProps) {
     const handlePageChange = (page: number) => {
         router.visit(window.location.pathname, {
@@ -36,7 +38,7 @@ export function DataTablePagination({
             },
             preserveState: true,
             preserveScroll: true,
-            only: ['users', 'currentPage', 'perPage', 'total', 'lastPage'],
+            only: [dataKey, 'currentPage', 'perPage', 'total', 'lastPage'],
         });
     };
 
@@ -48,7 +50,7 @@ export function DataTablePagination({
             },
             preserveState: true,
             preserveScroll: true,
-            only: ['users', 'currentPage', 'perPage', 'total', 'lastPage'],
+            only: [dataKey, 'currentPage', 'perPage', 'total', 'lastPage'],
         });
     };
 

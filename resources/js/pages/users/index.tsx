@@ -17,19 +17,19 @@ const breadcrumbs: BreadcrumbItem[] = [
 const columns: ColumnDef<User>[] = [
     {
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Name" sortKey="name" />
+            <DataTableColumnHeader column={column} title="Name" sortKey="name" dataKey="users" />
         ),
         accessorKey: 'name',
     },
     {
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Email" sortKey="email" />
+            <DataTableColumnHeader column={column} title="Email" sortKey="email" dataKey="users" />
         ),
         accessorKey: 'email',
     },
     {
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Access Level" sortKey="access_level.name" />
+            <DataTableColumnHeader column={column} title="Access Level" sortKey="access_level.name" dataKey="users" />
         ),
         accessorKey: 'access_level.name',
     }
@@ -66,6 +66,7 @@ export default function UsersIndex({
                     perPage={perPage}
                     total={total}
                     lastPage={lastPage}
+                    dataKey="users"
                 />
             </div>
         </AppLayout>

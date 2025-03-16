@@ -16,12 +16,14 @@ interface DataTableColumnHeaderProps<TData, TValue>
     column: Column<TData, TValue>
     title: string
     sortKey?: string
+    dataKey?: string
 }
 
 export function DataTableColumnHeader<TData, TValue>({
     column,
     title,
     sortKey,
+    dataKey = 'data',
     className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
     const searchParams = new URLSearchParams(window.location.search);
@@ -43,7 +45,7 @@ export function DataTableColumnHeader<TData, TValue>({
             },
             preserveState: true,
             preserveScroll: true,
-            only: ['users', 'currentPage', 'perPage', 'total', 'lastPage'],
+            only: [dataKey, 'currentPage', 'perPage', 'total', 'lastPage'],
         });
     };
 
@@ -52,9 +54,9 @@ export function DataTableColumnHeader<TData, TValue>({
     }
 
     return (
-        <div className={cn("flex items-center space-x-2", className)}>
+        <div className={cn("flex items-center space-x-2 font-medium", className)}>
             <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+                <DropdownMenuTrigger asChild className="cursor-pointer">
                     <Button
                         variant="ghost"
                         size="sm"
@@ -71,11 +73,11 @@ export function DataTableColumnHeader<TData, TValue>({
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start">
-                    <DropdownMenuItem onClick={() => handleSort('asc')}>
+                    <DropdownMenuItem onClick={() => handleSort('asc')} className="cursor-pointer">
                         <ArrowUp className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
                         Asc
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleSort('desc')}>
+                    <DropdownMenuItem onClick={() => handleSort('desc')} className="cursor-pointer">
                         <ArrowDown className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
                         Desc
                     </DropdownMenuItem>

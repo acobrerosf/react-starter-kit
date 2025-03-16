@@ -21,10 +21,8 @@ class UserController extends Controller
 
         $query = User::with('accessLevel');
 
-        // Apply sorting if sort parameter is provided
         if ($sort) {
             if (str_contains($sort, '.')) {
-                // Use the trait method for relationship sorting
                 $query->sortByRelation($sort, $order);
             } else {
                 $query->orderBy($sort, $order);
