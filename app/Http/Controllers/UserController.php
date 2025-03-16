@@ -16,12 +16,31 @@ class UserController extends Controller
     {
         $page = $request->input('page', 1);
         $perPage = $request->input('perPage', 10);
+        $sort = $request->input('sort');
+        $order = $request->input('order', 'asc');
 
-        $users = User::with('accessLevel')
-            ->paginate($perPage, ['*'], 'page', $page);
+        $query = User::with('accessLevel');
+
+        // Apply sorting if sort parameter is provided
+        if ($sort) {
+            if (str_contains($sort, '.')) {
+                // Use the trait method for relationship sorting
+                $query->sortByRelation($sort, $order);
+            } else {
+                $query->orderBy($sort, $order);
+            }
+        }
+
+        $users = $query->paginate($perPage, ['*'], 'page', $page);
 
         return Inertia::render('users/index', [
             'users' => $users->items(),
+            'currentPage' => $users->currentPage(),
+            'perPage' => $users->perPage(),
+            'total' => $users->total(),
+            'lastPage' => $users->lastPage(),
+            'sort' => $sort,
+            'order' => $order,
         ]);
     }
 }

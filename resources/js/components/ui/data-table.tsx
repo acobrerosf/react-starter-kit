@@ -4,11 +4,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
+    onRowClick?: (row: TData) => void;
+    className?: string;
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    onRowClick,
+    className,
 }: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
@@ -17,7 +21,7 @@ export function DataTable<TData, TValue>({
     })
 
     return (
-        <div className="rounded-md border">
+        <div className={`rounded-md border ${className || ''}`}>
             <Table>
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
@@ -43,6 +47,8 @@ export function DataTable<TData, TValue>({
                             <TableRow
                                 key={row.id}
                                 data-state={row.getIsSelected() && "selected"}
+                                onClick={() => onRowClick && onRowClick(row.original)}
+                                className={onRowClick ? 'cursor-pointer hover:bg-muted' : ''}
                             >
                                 {row.getVisibleCells().map((cell) => (
                                     <TableCell key={cell.id}>
