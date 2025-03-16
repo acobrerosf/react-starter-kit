@@ -33,13 +33,19 @@ export interface SharedData {
     [key: string]: unknown;
 }
 
-export interface User {
+export interface UserAccessLevel {
     id: number;
     name: string;
+}
+
+export interface User {
+    id: number;
+    access_level_id: number;
+    name: string;
     email: string;
-    avatar?: string;
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
+    accessLevel: UserAccessLevel | null;
     [key: string]: unknown; // This allows for additional properties...
 }

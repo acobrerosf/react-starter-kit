@@ -3,10 +3,10 @@ import { Head } from '@inertiajs/react';
 import AppearanceTabs from '@/components/appearance-tabs';
 import HeadingSmall from '@/components/heading-small';
 import { type BreadcrumbItem } from '@/types';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
-import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {

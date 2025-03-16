@@ -16,6 +16,7 @@ return [
         'admin' => [
             \App\Models\UserAccessLevel::FULL_ADMINISTRATOR => [
                 'adminUserCommon',
+                'usersManagement',
             ],
         ],
     ],
@@ -28,6 +29,13 @@ return [
             'password.edit',
             'password.update',
             'appearance',
+        ],
+        'usersManagement' => [
+            'users.index',
+            'users.create',
+            'users.store',
+            'users.edit',
+            'users.update',
         ],
     ],
 ];

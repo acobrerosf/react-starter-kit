@@ -20,6 +20,13 @@ return [
                     'icon' => 'LayoutGrid',
                 ],
             ],
+            'Configuration' => [
+                [
+                    'title' => 'Users',
+                    'href' => '/users',
+                    'icon' => 'Users',
+                ],
+            ],
         ],
     ],
 ];
