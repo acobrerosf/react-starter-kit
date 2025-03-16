@@ -24,8 +24,12 @@ class UserQueries
             });
         }
 
-        if ($sort && $order) {
-            $query->orderBy($sort, $order);
+        if ($sort) {
+            if (str_contains($sort, '.')) {
+                $query->sortByRelation($sort, $order);
+            } else {
+                $query->orderBy($sort, $order);
+            }
         }
 
         return $query->paginate($perPage, ['*'], 'page', $page);
