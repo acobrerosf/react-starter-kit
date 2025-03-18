@@ -90,6 +90,7 @@ Route::middleware(['auth:admin', 'acl:admin', 'verified'])->group(function () {
     Route::prefix('users')->controller(UserController::class)->group(function () {
         Route::get('/', 'index')->name('users.index');
         Route::get('/create', 'create')->name('users.create');
+        Route::get('/invite', 'invite')->name('users.invite');
         Route::post('/', 'store')->name('users.store');
         Route::get('/{user}/edit', 'edit')->name('users.edit');
         Route::put('/{user}', 'update')->name('users.update');

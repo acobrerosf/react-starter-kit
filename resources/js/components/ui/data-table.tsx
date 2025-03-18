@@ -35,7 +35,7 @@ export function DataTable<TData, TValue>({
             const handler = setTimeout(() => {
                 onFilterChange(filterValue);
             }, 300); // Debounce filter changes
-            
+
             return () => clearTimeout(handler);
         }
     }, [filterValue, onFilterChange]);
@@ -43,7 +43,7 @@ export function DataTable<TData, TValue>({
     return (
         <div className={className || ''}>
             {onFilterChange && (
-                <div className="flex items-center py-4">
+                <div className="flex items-center pb-4">
                     <Input
                         placeholder={filterPlaceholder}
                         value={filterValue}
