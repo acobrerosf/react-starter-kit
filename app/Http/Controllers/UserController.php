@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\UserSaveAction;
 use App\Http\Requests\DatatableRequest;
+use App\Http\Requests\UserStoreRequest;
 use App\Models\UserAccessLevel;
 use App\Queries\UserQueries;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 
@@ -44,11 +47,14 @@ class UserController extends Controller
     }
 
     /**
-     * Show the invite form.
+     * Store the user.
      */
-    public function invite(): InertiaResponse
+    public function store(UserStoreRequest $request, UserSaveAction $action): RedirectResponse
     {
-        return Inertia::render('users/invite', $this->loadRelatedLists());
+        $user = $action->handle($request->validated());
+
+        return redirect()->route('users.edit', $user->id)
+            ->with('success', 'User created successfully');
     }
 
     /**
@@ -58,7 +64,7 @@ class UserController extends Controller
     {
         return [
             ...$data,
-            'access_levels' => UserAccessLevel::orderBy('id')->get(),
+            'accessLevels' => UserAccessLevel::orderBy('id')->get(),
         ];
     }
 }

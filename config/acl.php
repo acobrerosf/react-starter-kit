@@ -33,7 +33,6 @@ return [
         'usersManagement' => [
             'users.index',
             'users.create',
-            'users.invite',
             'users.store',
             'users.edit',
             'users.update',

@@ -1,15 +1,16 @@
-import { NavItem, type BreadcrumbItem } from '@/types';
+import { UserAccessLevel, type BreadcrumbItem } from '@/types';
 import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 import AppLayout from '@/layouts/app-layout';
 import Heading from '@/components/heading';
-import { Head, router } from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeftIcon } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
-import HeadingSmall from '@/components/heading-small';
-import { cn } from '@/lib/utils';
-import { Link } from '@inertiajs/react';
+import { FormEventHandler, useRef } from 'react';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import InputError from '@/components/input-error';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -22,21 +23,28 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const sidebarNavItems: NavItem[] = [
-    {
-        title: 'Create account manually',
-        href: '/users/create',
-        icon: null,
-    },
-    {
-        title: 'Invite user',
-        href: '/users/invite',
-        icon: null,
-    },
-];
+interface UserForm {
+    access_level_id: string;
+    name: string;
+    email: string;
+}
 
-export default function UsersCreate() {
-    const currentPath = window.location.pathname;
+export default function UsersCreate({ accessLevels }: { accessLevels: UserAccessLevel[] }) {
+
+    const { data, setData, errors, post, reset, processing, recentlySuccessful } = useForm<Required<UserForm>>({
+        name: '',
+        email: '',
+        access_level_id: '',
+    });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        post(route('users.store'), {
+            preserveScroll: true,
+            onSuccess: () => reset(),
+        });
+    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -50,7 +58,7 @@ export default function UsersCreate() {
                     />
 
                     <Button
-                        variant="default"
+                        variant="outline"
                         onClick={() => router.visit(route('users.index'))}
                         className="cursor-pointer w-full sm:w-auto"
                     >
@@ -59,37 +67,66 @@ export default function UsersCreate() {
                     </Button>
                 </div>
 
-                <div className="flex flex-col space-y-8 lg:flex-row lg:space-y-0 lg:space-x-12">
-                    <aside className="w-full max-w-xl lg:w-48">
-                        <nav className="flex flex-col space-y-1 space-x-0">
-                            {sidebarNavItems.map((item) => (
-                                <Button
-                                    key={item.href}
-                                    size="sm"
-                                    variant="ghost"
-                                    asChild
-                                    className={cn('w-full justify-start', {
-                                        'bg-muted': currentPath === item.href,
-                                    })}
+                <div className="flex-1 md:max-w-2xl">
+                    <section className="max-w-xl space-y-12">
+                        <form onSubmit={submit} className="space-y-6">
+                            <div className="grid gap-2">
+                                <Label htmlFor="name">Name</Label>
+
+                                <Input
+                                    id="name"
+                                    className="mt-1 block w-full"
+                                    value={data.name}
+                                    onChange={(e) => setData('name', e.target.value)}
+                                    autoComplete="name"
+                                    placeholder="Name"
+                                />
+
+                                <InputError className="mt-2" message={errors.name} />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="email">Email</Label>
+
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    className="mt-1 block w-full"
+                                    value={data.email}
+                                    onChange={(e) => setData('email', e.target.value)}
+                                    autoComplete="username"
+                                    placeholder="Email address"
+                                />
+
+                                <InputError className="mt-2" message={errors.email} />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="access_level_id">Access Level</Label>
+
+                                <Select
+                                    value={data.access_level_id}
+                                    onValueChange={(value) => setData('access_level_id', value)}
                                 >
-                                    <Link href={item.href} prefetch>
-                                        {item.title}
-                                    </Link>
-                                </Button>
-                            ))}
-                        </nav>
-                    </aside>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select an access level" />
+                                    </SelectTrigger>
 
-                    <Separator className="my-6 md:hidden" />
+                                    <SelectContent>
+                                        {accessLevels.map((accessLevel) => (
+                                            <SelectItem key={accessLevel.id} value={accessLevel.id.toString()}>{accessLevel.name}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
 
-                    <div className="flex-1 md:max-w-2xl">
-                        <section className="max-w-xl space-y-12">
-                            <HeadingSmall
-                                title="Create account manually"
-                                description="Fill in the user details below to create a new account."
-                            />
-                        </section>
-                    </div>
+                                <InputError className="mt-2" message={errors.access_level_id} />
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                                <Button disabled={processing}>Create</Button>
+                            </div>
+                        </form>
+                    </section>
                 </div>
             </div>
         </AppLayout>

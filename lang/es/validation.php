@@ -192,6 +192,7 @@ return [
     */
 
     'attributes' => [
+        'access_level_id' => 'nivel de acceso',
         'name' => 'nombre',
         'email' => 'correo electrónico',
         'password' => 'contraseña',
