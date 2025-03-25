@@ -21,6 +21,11 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
+
+        $middleware->alias([
+            'auth' => \App\Http\Middleware\Authenticate::class,
+            'acl' => \App\Http\Middleware\Acl::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

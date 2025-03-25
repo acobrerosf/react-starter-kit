@@ -2,33 +2,23 @@ import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { type NavItem, type SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import * as LucideIcons from 'lucide-react';
+import { type LucideIcon } from 'lucide-react';
 import AppLogo from './app-logo';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: LayoutGrid,
-    },
-];
+const footerNavItems: NavItem[] = [];
 
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits',
-        icon: BookOpen,
-    },
-];
+// Add a helper function to get the icon component by name
+const getIconComponent = (iconName: string): LucideIcon => {
+    const Icon = LucideIcons[iconName as keyof typeof LucideIcons];
+    return (Icon || LucideIcons.HelpCircle) as LucideIcon;
+};
 
 export function AppSidebar() {
+    const { menu } = usePage<SharedData>().props;
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
@@ -44,7 +34,12 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                {Object.entries(menu).map(([category, items]) => (
+                    <NavMain key={category} label={category} items={items.map(item => ({
+                        ...item,
+                        icon: getIconComponent(item.icon as unknown as string)
+                    }))} />
+                ))}
             </SidebarContent>
 
             <SidebarFooter>
