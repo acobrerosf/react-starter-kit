@@ -9,6 +9,7 @@ import { ArrowLeftIcon, TrashIcon } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
 import UserForm, { UserFormData } from '@/components/user-form';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { FlashMessage } from '@/components/flash-message';
 
 interface Props {
     user: User;
@@ -56,6 +57,16 @@ export default function UsersEdit({ user, accessLevels, showDeleteButton }: Prop
             <Head title={`Edit User: ${user.name}`} />
 
             <div className="px-4 py-6 sm:px-6">
+                {!showDeleteButton && (
+                    <div className="mb-6">
+                        <FlashMessage 
+                            type="warning" 
+                            text="You are editing your own account. If you change your email you will be logged out and will have to log in again. Deleting is not available." 
+                            showTitle={false}
+                        />
+                    </div>
+                )}
+                
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                     <Heading
                         title={`Edit User: ${user.name}`}

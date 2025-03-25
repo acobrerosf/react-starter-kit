@@ -77,7 +77,14 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user, UserSaveAction $action): RedirectResponse
     {
+        $logoutUser = $user->id === auth()->user()->id &&
+            $user->email !== $request->email;
+
         $user = $action->handle($request->validated(), $user);
+
+        if ($logoutUser) {
+            auth()->logout();
+        }
 
         flashSuccessMessage('User updated successfully');
 
