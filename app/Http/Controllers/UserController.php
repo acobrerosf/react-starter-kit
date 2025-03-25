@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\UserDeleteAction;
 use App\Actions\UserSaveAction;
 use App\Http\Requests\DatatableRequest;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
+use App\Models\User;
 use App\Models\UserAccessLevel;
 use App\Queries\UserQueries;
 use Illuminate\Http\RedirectResponse;
@@ -53,8 +56,50 @@ class UserController extends Controller
     {
         $user = $action->handle($request->validated());
 
-        return redirect()->route('users.edit', $user->id)
-            ->with('success', 'User created successfully');
+        flashSuccessMessage('User created successfully');
+
+        return redirect()->route('users.edit', $user->id);
+    }
+
+    /**
+     * Show the edit form.
+     */
+    public function edit(User $user): InertiaResponse
+    {
+        return Inertia::render('users/edit', $this->loadRelatedLists([
+            'user' => $user,
+            'showDeleteButton' => $user->id !== auth()->user()->id,
+        ]));
+    }
+
+    /**
+     * Update the user.
+     */
+    public function update(UserUpdateRequest $request, User $user, UserSaveAction $action): RedirectResponse
+    {
+        $user = $action->handle($request->validated(), $user);
+
+        flashSuccessMessage('User updated successfully');
+
+        return redirect()->route('users.edit', $user->id);
+    }
+
+    /**
+     * Delete the user.
+     */
+    public function destroy(User $user, UserDeleteAction $action): RedirectResponse
+    {
+        if ($user->id === auth()->user()->id) {
+            flashDangerMessage('You cannot delete your own account');
+
+            return redirect()->route('users.edit', $user->id);
+        }
+
+        $action->handle($user);
+
+        flashSuccessMessage('User deleted successfully');
+
+        return redirect()->route('users.index');
     }
 
     /**

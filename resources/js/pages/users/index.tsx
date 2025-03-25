@@ -5,12 +5,13 @@ import { User } from '@/types';
 import { useEffect, useState } from 'react';
 
 import AppLayout from '@/layouts/app-layout';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { DataTable } from '@/components/ui/data-table';
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
 import { DataTablePagination } from '@/components/ui/data-table-pagination';
 import Heading from '@/components/heading';
 import { Button } from '@/components/ui/button';
-import { PlusIcon } from 'lucide-react';
+import { PlusIcon, CheckIcon } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -41,7 +42,7 @@ const columns: ColumnDef<User>[] = [
 ];
 
 export default function UsersIndex({
-    users, currentPage, perPage, total, lastPage, sort, order, filter
+    users, currentPage, perPage, total, lastPage, sort, order, filter, successAlert
 }: {
     users: User[],
     currentPage: number,
@@ -50,7 +51,8 @@ export default function UsersIndex({
     lastPage: number,
     sort?: string,
     order?: string,
-    filter?: string
+    filter?: string,
+    successAlert?: string
 }) {
     const [currentFilter, setCurrentFilter] = useState(filter || '');
     const [debouncedFilter, setDebouncedFilter] = useState(filter || '');
@@ -102,7 +104,7 @@ export default function UsersIndex({
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Users" />
 
-            <div className="px-4 py-6 sm:px-6">
+            <div className="px-4 py-6 sm:px-6">                
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                     <Heading title="Users" description="Manage users" />
 

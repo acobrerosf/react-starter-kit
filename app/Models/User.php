@@ -6,13 +6,14 @@ use App\Traits\HasSortableRelations;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, HasSortableRelations, Notifiable;
+    use HasFactory, HasSortableRelations, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

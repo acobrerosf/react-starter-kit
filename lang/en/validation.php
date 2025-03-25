@@ -191,6 +191,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'access_level_id' => 'access level',
+    ],
 
 ];

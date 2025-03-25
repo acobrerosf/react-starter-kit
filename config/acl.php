@@ -36,6 +36,7 @@ return [
             'users.store',
             'users.edit',
             'users.update',
+            'users.destroy',
         ],
     ],
 ];
