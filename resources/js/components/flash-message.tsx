@@ -42,7 +42,7 @@ export function FlashMessage({ type, text, className = '', showTitle = true }: F
         <Alert variant={getAlertVariant(type)} className={className}>
             {getAlertIcon(type)}
             {showTitle ? (
-                <AlertTitle className="capitalize">{text}</AlertTitle>
+                <AlertTitle>{text}</AlertTitle>
             ) : (
                 <AlertDescription>{text}</AlertDescription>
             )}
