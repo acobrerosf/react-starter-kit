@@ -41,19 +41,20 @@ class HandleInertiaRequests extends Middleware
 
         return [
             ...parent::share($request),
-            'locale' => config('app.locale'),
-            'fallbackLocale' => config('app.fallback_locale'),
             'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
-            'menu' => config('menu.'.auth()->guard()?->name.'.'.$request->user()?->access_level_id),
             'auth' => [
                 'user' => $request->user(),
             ],
+            'menu' => config('menu.'.auth()->guard()?->name.'.'.$request->user()?->access_level_id),
+            'locale' => config('app.locale'),
+            'fallbackLocale' => config('app.fallback_locale'),
             'message' => session('message'),
             'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
+            'sidebarOpen' => $request->cookie('sidebar_state') === 'true',
         ];
     }
 }

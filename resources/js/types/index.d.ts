@@ -29,7 +29,9 @@ export interface SharedData {
     menu: Record<string, NavItem[]>;
     locale: string;
     fallbackLocale: string;
+    message: { type: string; text: string } | null;
     ziggy: Config & { location: string };
+    sidebarOpen: boolean;
     [key: string]: unknown;
 }
 
