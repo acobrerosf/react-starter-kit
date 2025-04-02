@@ -1,5 +1,7 @@
-import { UserAccessLevel } from '@/types';
 import { FormEventHandler } from 'react';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
+
+import { UserAccessLevel } from '@/types';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import InputError from '@/components/input-error';
@@ -31,10 +33,12 @@ export default function UserForm({
     onSubmit,
     accessLevels,
 }: UserFormProps) {
+    const { t } = useLaravelReactI18n();
+
     return (
         <form onSubmit={onSubmit} className="space-y-6">
             <div className="grid gap-2">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name">{t('pages.users.form.name')}</Label>
 
                 <Input
                     id="name"
@@ -42,14 +46,14 @@ export default function UserForm({
                     value={data.name}
                     onChange={(e) => setData('name', e.target.value)}
                     autoComplete="name"
-                    placeholder="Name"
+                    placeholder={t('pages.users.form.name_placeholder')}
                 />
 
                 <InputError className="mt-2" message={errors.name} />
             </div>
 
             <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t('pages.users.form.email')}</Label>
 
                 <Input
                     id="email"
@@ -58,21 +62,21 @@ export default function UserForm({
                     value={data.email}
                     onChange={(e) => setData('email', e.target.value)}
                     autoComplete="username"
-                    placeholder="Email address"
+                    placeholder={t('pages.users.form.email_placeholder')}
                 />
 
                 <InputError className="mt-2" message={errors.email} />
             </div>
 
             <div className="grid gap-2">
-                <Label htmlFor="access_level_id">Access Level</Label>
+                <Label htmlFor="access_level_id">{t('pages.users.form.access_level')}</Label>
 
                 <Select
                     value={data.access_level_id}
                     onValueChange={(value) => setData('access_level_id', value)}
                 >
                     <SelectTrigger>
-                        <SelectValue placeholder="Select an access level" />
+                        <SelectValue placeholder={t('pages.users.form.access_level_placeholder')} />
                     </SelectTrigger>
 
                     <SelectContent>

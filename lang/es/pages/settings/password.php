@@ -11,6 +11,7 @@ return [
     */
 
     'title' => 'Ajustes de perfil',
+    'submenu_title' => 'Contraseña',
     'heading_title' => 'Actualizar contraseña',
     'heading_description' => 'Asegure que su cuenta esté usando una contraseña larga y aleatoria para mantenerse seguro',
     'current_password' => 'Contraseña actual',

@@ -11,6 +11,7 @@ return [
     */
 
     'title' => 'Profile settings',
+    'submenu_title' => 'Password',
     'heading_title' => 'Update password',
     'heading_description' => 'Ensure your account is using a long, random password to stay secure',
     'current_password' => 'Current password',

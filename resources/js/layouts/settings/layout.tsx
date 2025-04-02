@@ -7,24 +7,6 @@ import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 import { useLaravelReactI18n } from 'laravel-react-i18n';
 
-const sidebarNavItems: NavItem[] = [
-    {
-        title: 'Profile',
-        href: '/settings/profile',
-        icon: null,
-    },
-    {
-        title: 'Password',
-        href: '/settings/password',
-        icon: null,
-    },
-    {
-        title: 'Appearance',
-        href: '/settings/appearance',
-        icon: null,
-    },
-];
-
 export default function SettingsLayout({ children }: PropsWithChildren) {
     // When server-side rendering, we only render the layout on the client...
     if (typeof window === 'undefined') {
@@ -32,6 +14,24 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
     }
     
     const { t } = useLaravelReactI18n();
+
+    const sidebarNavItems: NavItem[] = [
+        {
+            title: t('pages.settings.profile.submenu_title'),
+            href: route('profile.update'),
+            icon: null,
+        },
+        {
+            title: t('pages.settings.password.submenu_title'),
+            href: route('password.update'),
+            icon: null,
+        },
+        {
+            title: t('pages.settings.appearance.submenu_title'),
+            href: route('appearance'),
+            icon: null,
+        },
+    ];
 
     const currentPath = window.location.pathname;
 

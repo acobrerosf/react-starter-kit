@@ -11,6 +11,7 @@ return [
     */
 
     'title' => 'Profile settings',
+    'submenu_title' => 'Profile',
     'heading_title' => 'Profile information',
     'heading_description' => 'Update your name and email address',
     'name' => 'Name',

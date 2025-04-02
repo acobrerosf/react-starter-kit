@@ -18,14 +18,17 @@ interface Props {
 }
 
 export default function UsersEdit({ user, accessLevels, showDeleteButton }: Props) {
+    const { t } = useLaravelReactI18n();
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
     const breadcrumbs: BreadcrumbItem[] = [
         {
-            title: 'Users',
-            href: '/users',
+            title: t('pages.users.index.title'),
+            href: route('users.index'),
         },
         {
-            title: 'Edit',
-            href: `/users/${user.id}/edit`,
+            title: t('pages.users.edit.title'),
+            href: route('users.edit', user.id),
         },
     ];
 
@@ -34,9 +37,6 @@ export default function UsersEdit({ user, accessLevels, showDeleteButton }: Prop
         email: user.email,
         access_level_id: user.access_level_id.toString(),
     });
-
-    const { t } = useLaravelReactI18n();
-    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -54,14 +54,14 @@ export default function UsersEdit({ user, accessLevels, showDeleteButton }: Prop
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title={`Edit User: ${user.name}`} />
+            <Head title={t('pages.users.edit.title')} />
 
             <div className="px-4 py-6 sm:px-6">
                 {!showDeleteButton && (
                     <div className="mb-6">
                         <FlashMessage 
                             type="warning" 
-                            text="You are editing your own account. If you change your email you will be logged out and will have to log in again. Deleting is not available." 
+                            text={t('pages.users.edit.cannot_delete_own_account')} 
                             showTitle={false}
                         />
                     </div>
@@ -69,8 +69,8 @@ export default function UsersEdit({ user, accessLevels, showDeleteButton }: Prop
                 
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                     <Heading
-                        title={`Edit User: ${user.name}`}
-                        description="Update user information."
+                        title={t('pages.users.edit.title')}
+                        description={t('pages.users.edit.description')}
                     />
 
                     <div className="flex flex-col sm:flex-row gap-2">
@@ -80,7 +80,7 @@ export default function UsersEdit({ user, accessLevels, showDeleteButton }: Prop
                                 onClick={() => setShowDeleteDialog(true)}
                                 className="cursor-pointer w-full sm:w-auto"
                             >
-                                Delete
+                                {t('pages.users.edit.delete')}
                                 <TrashIcon className="ml-2 h-4 w-4" />
                             </Button>
                         )}
@@ -89,7 +89,7 @@ export default function UsersEdit({ user, accessLevels, showDeleteButton }: Prop
                             onClick={() => router.visit(route('users.index'))}
                             className="cursor-pointer w-full sm:w-auto"
                         >
-                            Back
+                            {t('pages.users.edit.back')}
                             <ArrowLeftIcon className="ml-2 h-4 w-4" />
                         </Button>
                     </div>
@@ -102,7 +102,7 @@ export default function UsersEdit({ user, accessLevels, showDeleteButton }: Prop
                             setData={(key, value) => setData(key, value)}
                             errors={errors}
                             processing={processing}
-                            submitLabel="Update"
+                            submitLabel={t('pages.users.edit.submit')}
                             onSubmit={submit}
                             accessLevels={accessLevels}
                         />
@@ -113,9 +113,9 @@ export default function UsersEdit({ user, accessLevels, showDeleteButton }: Prop
             <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Delete User</DialogTitle>
+                        <DialogTitle>{t('pages.users.edit.delete_title')}</DialogTitle>
                         <DialogDescription>
-                            {t('Are you sure you want to delete this user?')}
+                            {t('pages.users.edit.delete_confirmation')}
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
@@ -123,7 +123,7 @@ export default function UsersEdit({ user, accessLevels, showDeleteButton }: Prop
                             variant="outline" 
                             onClick={() => setShowDeleteDialog(false)}
                         >
-                            Cancel
+                            {t('pages.users.edit.cancel')}
                         </Button>
                         <Button 
                             variant="destructive" 
@@ -132,7 +132,7 @@ export default function UsersEdit({ user, accessLevels, showDeleteButton }: Prop
                                 setShowDeleteDialog(false);
                             }}
                         >
-                            Delete
+                            {t('pages.users.edit.delete')}
                         </Button>
                     </DialogFooter>
                 </DialogContent>

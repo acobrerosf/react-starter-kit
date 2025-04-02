@@ -3,43 +3,15 @@ import { Head, router } from '@inertiajs/react';
 import { ColumnDef } from "@tanstack/react-table";
 import { User } from '@/types';
 import { useEffect, useState } from 'react';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 import AppLayout from '@/layouts/app-layout';
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { DataTable } from '@/components/ui/data-table';
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
 import { DataTablePagination } from '@/components/ui/data-table-pagination';
 import Heading from '@/components/heading';
 import { Button } from '@/components/ui/button';
 import { PlusIcon, CheckIcon } from 'lucide-react';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Users',
-        href: '/users',
-    },
-];
-
-const columns: ColumnDef<User>[] = [
-    {
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Name" sortKey="name" dataKey="users" />
-        ),
-        accessorKey: 'name',
-    },
-    {
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Email" sortKey="email" dataKey="users" />
-        ),
-        accessorKey: 'email',
-    },
-    {
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Access Level" sortKey="access_level.name" dataKey="users" />
-        ),
-        accessorKey: 'access_level.name',
-    }
-];
 
 export default function UsersIndex({
     users, currentPage, perPage, total, lastPage, sort, order, filter, successAlert
@@ -60,6 +32,36 @@ export default function UsersIndex({
     const handleFilterChange = (value: string) => {
         setCurrentFilter(value);
     };
+
+    const { t } = useLaravelReactI18n();
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t('pages.users.index.title'),
+            href: route('users.index'),
+        },
+    ];
+
+    const columns: ColumnDef<User>[] = [
+        {
+            header: ({ column }) => (
+                <DataTableColumnHeader column={column} title={t('pages.users.index.name')} sortKey="name" dataKey="users" />
+            ),
+            accessorKey: 'name',
+        },
+        {
+            header: ({ column }) => (
+                <DataTableColumnHeader column={column} title={t('pages.users.index.email')} sortKey="email" dataKey="users" />
+            ),
+            accessorKey: 'email',
+        },
+        {
+            header: ({ column }) => (
+                <DataTableColumnHeader column={column} title={t('pages.users.index.access_level')} sortKey="access_level.name" dataKey="users" />
+            ),
+            accessorKey: 'access_level.name',
+        }
+    ];
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -102,18 +104,18 @@ export default function UsersIndex({
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Users" />
+            <Head title={t('pages.users.index.title')} />
 
             <div className="px-4 py-6 sm:px-6">                
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                    <Heading title="Users" description="Manage users" />
+                    <Heading title={t('pages.users.index.title')} description={t('pages.users.index.description')} />
 
                     <Button
                         variant="default"
                         onClick={() => router.visit(route('users.create'))}
                         className="cursor-pointer w-full sm:w-auto"
                     >
-                        Add
+                        {t('pages.users.index.add')}
                         <PlusIcon className="ml-2 h-4 w-4" />
                     </Button>
                 </div>
@@ -124,7 +126,7 @@ export default function UsersIndex({
                         data={users}
                         onRowClick={handleRowClick}
                         onFilterChange={handleFilterChange}
-                        filterPlaceholder="Search users..."
+                        filterPlaceholder={t('pages.users.index.filter_placeholder')}
                         initialFilterValue={currentFilter}
                     />
 

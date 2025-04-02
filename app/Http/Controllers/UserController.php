@@ -56,7 +56,7 @@ class UserController extends Controller
     {
         $user = $action->handle($request->validated());
 
-        flashSuccessMessage('User created successfully');
+        flashSuccessMessage(__('pages/users/create.success'));
 
         return redirect()->route('users.edit', $user->id);
     }
@@ -86,7 +86,7 @@ class UserController extends Controller
             auth()->logout();
         }
 
-        flashSuccessMessage('User updated successfully');
+        flashSuccessMessage(__('pages/users/edit.success'));
 
         return redirect()->route('users.edit', $user->id);
     }
@@ -97,14 +97,14 @@ class UserController extends Controller
     public function destroy(User $user, UserDeleteAction $action): RedirectResponse
     {
         if ($user->id === auth()->user()->id) {
-            flashDangerMessage('You cannot delete your own account');
+            flashDangerMessage(__('pages/users/edit.delete_own_account_error'));
 
             return redirect()->route('users.edit', $user->id);
         }
 
         $action->handle($user);
 
-        flashSuccessMessage('User deleted successfully');
+        flashSuccessMessage(__('pages/users/edit.delete_success'));
 
         return redirect()->route('users.index');
     }
