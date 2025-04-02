@@ -12,13 +12,6 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Profile settings',
-        href: '/settings/profile',
-    },
-];
-
 type ProfileForm = {
     name: string;
     email: string;
@@ -33,6 +26,13 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
     });
 
     const { t } = useLaravelReactI18n();
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t('pages.settings.profile.title'),
+            href: route('profile.update'),
+        },
+    ];
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();

@@ -2,6 +2,7 @@ import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { useState, useEffect } from 'react';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -29,6 +30,8 @@ export function DataTable<TData, TValue>({
         columns,
         getCoreRowModel: getCoreRowModel(),
     })
+
+    const { t } = useLaravelReactI18n();
 
     useEffect(() => {
         if (onFilterChange) {
@@ -91,7 +94,7 @@ export function DataTable<TData, TValue>({
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
+                                    {t('datatables.no_results')}
                                 </TableCell>
                             </TableRow>
                         )}

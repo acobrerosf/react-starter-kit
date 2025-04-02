@@ -11,6 +11,7 @@ return [
     */
 
     'title' => 'Ajustes de perfil',
+    'submenu_title' => 'Perfil',
     'heading_title' => 'Información de perfil',
     'heading_description' => 'Actualice su nombre y dirección de correo electrónico',
     'name' => 'Nombre',

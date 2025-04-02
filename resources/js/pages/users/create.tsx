@@ -9,18 +9,20 @@ import { ArrowLeftIcon } from 'lucide-react';
 import { FormEventHandler } from 'react';
 import UserForm, { UserFormData } from '@/components/user-form';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Users',
-        href: '/users',
-    },
-    {
-        title: 'Create',
-        href: '/users/create',
-    },
-];
-
 export default function UsersCreate({ accessLevels }: { accessLevels: UserAccessLevel[] }) {
+    const { t } = useLaravelReactI18n();
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t('pages.users.index.title'),
+            href: route('users.index'),
+        },
+        {
+            title: t('pages.users.create.title'),
+            href: route('users.create'),
+        },
+    ];
+    
     const { data, setData, errors, post, reset, processing } = useForm<Required<UserFormData>>({
         name: '',
         email: '',
@@ -38,13 +40,13 @@ export default function UsersCreate({ accessLevels }: { accessLevels: UserAccess
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Create User" />
+            <Head title={t('pages.users.create.title')} />
 
             <div className="px-4 py-6 sm:px-6">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                     <Heading
-                        title="Create User"
-                        description="Add a new user to the system."
+                        title={t('pages.users.create.title')}
+                        description={t('pages.users.create.description')}
                     />
 
                     <Button
@@ -52,7 +54,7 @@ export default function UsersCreate({ accessLevels }: { accessLevels: UserAccess
                         onClick={() => router.visit(route('users.index'))}
                         className="cursor-pointer w-full sm:w-auto"
                     >
-                        Back
+                        {t('pages.users.create.back')}
                         <ArrowLeftIcon className="ml-2 h-4 w-4" />
                     </Button>
                 </div>
@@ -64,7 +66,7 @@ export default function UsersCreate({ accessLevels }: { accessLevels: UserAccess
                             setData={(key, value) => setData(key, value)}
                             errors={errors}
                             processing={processing}
-                            submitLabel="Create"
+                            submitLabel={t('pages.users.create.submit')}
                             onSubmit={submit}
                             accessLevels={accessLevels}
                         />
