@@ -21,7 +21,7 @@ class UserController extends Controller
      */
     public function index(DatatableRequest $request, UserQueries $userQueries): InertiaResponse
     {
-        $users = $userQueries->getPaginatedUsers(
+        $users = $userQueries->getPaginatedList(
             $request->getPage(),
             $request->getPerPage(),
             $request->getSort(),
